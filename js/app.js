@@ -4,7 +4,7 @@ $(document).ready(function(){
 	var $bg1=$(".svgBg-one");
 	var $bg2=$(".svgBg-two");
 	var $bg3=$(".svgBg-three");
-
+	
 	var $trees=[].slice.call(document.querySelectorAll(".svgTree"));
 	var $treeParts=[].slice.call(document.querySelectorAll("svgTree-item"));
 
@@ -13,13 +13,16 @@ $(document).ready(function(){
 	var $planeRotater=$(".plane-wrapper");
 	var $plane=$(".plane");
 	var isDesktop=window.matchMedia("(min-width:769px)").matches;
-	var topH=186;
+	var topH=$top.height();
+	
+
 	var bg1change,bg2change,bg3change;
 	var bg1max=10;
 	var bg2max=22;
 	var bg3max=44;
 	var pullDeltaY;
-	var maxPullDeltaY=110;
+	// 最大下拉距离
+	var maxPullDeltaY=90;
 
 	var treesData={};
 	var treeMaxX=18;
@@ -124,9 +127,9 @@ $(document).ready(function(){
 
 			trunkArr[2]=(treeObj.trunkInitX+changeX/2)+","+treeObj.trunkInitY;
 			leafsArr[3]=(treeObj.leafsInitX+changeX)+","+treeObj.leafsInitY;
-			console.log(trunkArr);
-			console.log(leafsArr);
-			console.log(treeObj);
+			//console.log(trunkArr);
+			//console.log(leafsArr);
+			//console.log(treeObj);
 			treeObj.$treeTrunk.setAttribute("d",trunkArr.join(" "));
 			treeObj.$treeLeafs.setAttribute("d",leafsArr.join(" "));
 		});
@@ -182,6 +185,8 @@ $(document).ready(function(){
 		}
 
 		animate();
+
+
 		//这个功能可以发射每一个帧，直到动画结束（curstep >steps）
 		function animate(){
 			curStep++;
@@ -193,6 +198,8 @@ $(document).ready(function(){
 
 			releaseChange({topY:topY,bgY:bgY,treeVal:treeVal,planeDeg:planeDeg});
 
+			
+
 			if(curStep>steps){
 				pullDeltaY=0;
 				//如果下拉距离小于1/2*maxPullDeltaY,允许下拉事件更早
@@ -200,6 +207,7 @@ $(document).ready(function(){
 				return;
 			}
 			requestAnimFrame(animate);
+			// applyChanges(topHeight);
 		}
 
 
@@ -212,11 +220,21 @@ $(document).ready(function(){
 
 		treeChange=props.treeVal*treeMaxCoef;
 		planeChange=props.planeDeg*planeMaxCoef;
+		console.log(props);
 
 		applyChanges(props.topY);
+
+
 	}
 
 	//速度曲线
+	/*
+	 * 缓动算法
+	 * t: current time（当前时间）
+	 * b: beginning value（初始值）
+	 * c: change in value（变化量）
+	 * d: duration（持续时间）
+	*/
 	var easings={
 		elastic:function(t,b,c,d) {
 	      var ts = (t/=d)*t;

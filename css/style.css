@@ -36,14 +36,14 @@ html, body {
 }*/
 .page-head{
 	position: relative;
-    height: 18.6rem;
+    height: 17.6rem;
     background: -webkit-linear-gradient(#7BCECA, #82D3CB);
     background: linear-gradient(#7BCECA, #82D3CB);
     overflow: hidden;
 }
 .page-body {
   position: relative;
-  min-height: 56.8rem;
+  min-height: 40rem;
   padding-top: 5rem;
   will-change: transform;
 }
