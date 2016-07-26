@@ -57,6 +57,9 @@ html, body {
   border-radius: 50%;
   box-shadow: 0 0.3rem 0.3rem rgba(0, 0, 0, 0.3);
 }
+.icon-size{
+	font-size: 2.5rem;
+}
 .plane-wrapper {
   position: absolute;
   left: 50%;
@@ -68,6 +71,11 @@ html, body {
 }
 .list{
 	position: relative;
+}
+.list.padded{
+	-webkit-transition: padding 0.3s;
+          transition: padding 0.3s;
+  	padding-top: 8rem;
 }
 .list-item{
 	display: -webkit-flex; /* Safari */
@@ -86,6 +94,14 @@ html, body {
     -webkit-transition: opacity 0.3s;
     transition: opacity 0.3s;
 }
+.list-item.absPos{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.list-item.hidden{
+	opacity: 0;
+}
 .item-icon{
 	/*flex-grow:1;*/
 	position: relative;
@@ -100,6 +116,10 @@ html, body {
     font-size: 0;
     text-decoration: none;*/
     border-radius: 50%;
+}
+.item-icon.animated{
+	-webkit-animation: animateIcon 0.6s forwards;
+          animation: animateIcon 0.6s forwards;
 }
 .item-icon .file{
 	/*line-height: 4rem;*/
@@ -249,4 +269,51 @@ html, body {
 		-webkit-transform:rotate(0deg);
 		transform:rotate(0deg);
 	}
+}
+
+/*Icon动画*/
+@-webkit-keyframes animateIcon {
+  20% {
+    -webkit-transform: scaleY(0.7);
+            transform: scaleY(0.7);
+  }
+  40% {
+    -webkit-transform: scaleY(0.9);
+            transform: scaleY(0.9);
+  }
+  60% {
+    -webkit-transform: scaleY(0.6);
+            transform: scaleY(0.6);
+  }
+  80% {
+    -webkit-transform: scaleY(1.1);
+            transform: scaleY(1.1);
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
+}
+
+@keyframes animateIcon {
+  20% {
+    -webkit-transform: scaleY(0.7);
+            transform: scaleY(0.7);
+  }
+  40% {
+    -webkit-transform: scaleY(0.9);
+            transform: scaleY(0.9);
+  }
+  60% {
+    -webkit-transform: scaleY(0.6);
+            transform: scaleY(0.6);
+  }
+  80% {
+    -webkit-transform: scaleY(1.1);
+            transform: scaleY(1.1);
+  }
+  100% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+  }
 }

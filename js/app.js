@@ -4,6 +4,7 @@ $(document).ready(function(){
 	var $bg1=$(".svgBg-one");
 	var $bg2=$(".svgBg-two");
 	var $bg3=$(".svgBg-three");
+    var $list=$(".list");
 	
 	var $trees=[].slice.call(document.querySelectorAll(".svgTree"));
 	var $treeParts=[].slice.call(document.querySelectorAll("svgTree-item"));
@@ -212,6 +213,65 @@ $(document).ready(function(){
 
 
 	}
+
+	function insertData(){
+        $.ajax({
+            type: "GET",
+            url: "php/data.php",
+            dataType:'json',
+            success: handleData
+        });
+    }
+
+    function handleData(data){
+        //创建json数据并循环输出
+        for(i in data){
+            //创建json数据
+            var dataInt={
+                freshdata:[{
+                    type:data[i].type,
+                    detail:data[i].detail,
+                    time:data[i].time
+                }]
+            }
+            //创建DOM结构并循环输出json数据
+            console.log(dataInt)
+
+            $.each(dataInt.freshdata,function(key,value){
+                var listItem=$("<div>").addClass("list-item");
+                switch($(value).attr("type")){
+                    case "Image":
+                        var Image=$("<div>").addClass("item-icon bg-gray").appendTo($(listItem));
+                        $("<i></i>").addClass("fa fa-folder icon-size white file").appendTo($(Image));
+                        break;
+                    case "Note":
+                        var Note=$("<div>").addClass("item-icon bg-blue").appendTo($(listItem));
+                        $("<i></i>").addClass("fa fa-file-text icon-size white file").appendTo($(Note));
+                        break;
+                    case "Doc":
+                        var Note=$("<div>").addClass("item-icon bg-yellow").appendTo($(listItem));
+                        $("<i></i>").addClass("fa fa-minus-square icon-size white file").appendTo($(Note));
+                        break;
+                }
+                var itemInner=$("<div>").addClass("item-inner").appendTo($(listItem));
+                var itemLink=$("<a></a>").addClass("item-link").appendTo($(itemInner));
+                var itemName=$("<p></p>").addClass("item-name").text($(value).attr("detail")).appendTo($(itemLink));
+                var itemTime=$("<p></p>").addClass("item-time").text($(value).attr("time")).appendTo($(itemLink));
+                var itemTag=$("<div>").addClass("item-tag").appendTo($(listItem));
+                var tagIcon=$("<span></span>").addClass("tag-icon").text("i").appendTo($(listItem));
+
+                listItem.addClass("absPos hidden");
+                $list.prepend(listItem).addClass("padded");
+                listItem.removeClass("hidden");
+                listItem.find(".item-icon").addClass("animated");
+                setTimeout(function () {
+                    $list.removeClass("padded");
+                    listItem.removeClass("absPos");
+                },300);
+
+            })
+        }
+    }
 
 	//当释放事件触发时计算更新页面的值
 	function releaseChange(props){
